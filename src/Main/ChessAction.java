@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +79,46 @@ public class ChessAction {
         int y = Math.abs(position.charAt(1) - destination.charAt(1));
 
         return (x == 1 && y == 2) || (x == 2 && y == 1);
+    }
+
+    public Set findKnightPossibleMoves(String position) {
+        position = toNormal(position);
+
+        if (position == null)
+            return null;
+
+        Set<String> knightMovesList = new HashSet<>();
+
+        String destination = null;
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                destination = Character.toString((char) (i + 65)) + Character.toString((char) (j + 49)); // 65 - A || 49 - 1
+                destination = toNormal(destination);
+                int x = Math.abs(position.charAt(0) - destination.charAt(0));
+                int y = Math.abs(position.charAt(1) - destination.charAt(1));
+                if (((x == 1 && y == 2) || (x == 2 && y == 1)) && toNormal(destination) != null)
+                    knightMovesList.add(destination);
+            }
+        }
+        return knightMovesList;
+    }
+
+    public Set possibleKnightMovesDouble(String position){
+        position = toNormal(position);
+
+        if (position == null)
+            return null;
+
+        Set<String> knightMovesList = findKnightPossibleMoves(position);
+        //System.out.println(knightMovesList);
+        Set<String> knightMovesListDouble = new HashSet<>();
+
+        for (String st : knightMovesList) {
+            knightMovesListDouble.addAll(findKnightPossibleMoves(st));
+            //System.out.println(knightMovesListDouble);
+        }
+
+        return knightMovesListDouble;
     }
 
     public boolean checkRookMove(String position, String destination) {

@@ -2,6 +2,10 @@ package Main;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChessActionTest extends ChessAction {
@@ -159,5 +163,41 @@ class ChessActionTest extends ChessAction {
         assertFalse(chessAction.checkRookMove("123asd", "7g"));
         assertFalse(chessAction.checkRookMove("a!8", "f6"));
         assertFalse(chessAction.checkRookMove("B5", "asdf32"));
+    }
+
+    @Test
+    void testFindKnightPossibleMoves() {
+        Set<String> moves = new HashSet<>();
+
+        Random rn = new Random();
+
+        for (int i = 0; i < 11; i++) {
+            char num = (char) (rn.nextInt(7) + 49);
+            char sym = (char) (rn.nextInt(7) + 97);
+            moves.add(Character.toString(sym) + Character.toString(num));
+        }
+
+        for (String st : moves) {
+            assertEquals(chessAction.possibleKnightMovesDouble(st), chessAction.possibleKnightMovesDouble(st)); // check what?
+        }
+    }
+
+    @Test
+    void testPossibleKnightMovesDouble() {
+        Set<String> moves = new HashSet<>();
+
+        Random rn = new Random();
+
+        for (int i = 0; i < 11; i++) {
+            char num = (char) (rn.nextInt(8) + 49);
+            char sym = (char) (rn.nextInt(8) + 97);
+            moves.add(Character.toString(sym) + Character.toString(num));
+        }
+
+        System.out.println(moves);
+
+        for (String st : moves) {
+            assertEquals(chessAction.findKnightPossibleMoves(st), chessAction.findKnightPossibleMoves(st)); // check what?
+        }
     }
 }
